@@ -12,42 +12,55 @@
       crossorigin="anonymous"
     />
     <link rel="stylesheet" href="css/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;1,100&display=swap" rel="stylesheet">
   </head>
-  <body>
+  <body class="body-index">
     <!-- INICIO NAVBAR -->
-    <section>
-      <nav class="navbar navbar-expand-lg navbar-light bg-light pb-1">
-        <div class="container-fluid">
-          <a class="navbar-brand text-light" href="#"><img src="assets/img/logo.png" id="logo-img" alt=""> Clinica Rolling</a>
-          <button class="navbar-toggler border-dark" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link text-light" aria-current="page" href="#">Iniciar Sesión</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link text-light" href="#">Registrarse</a>
-              </li>
-            </ul>
+    <section class="position-fixed w-100 d-flex justify-content-center">
+      <div class="box-white pb-1 my-0 mx-5 py-0">
+          <nav class="navbar navbar-expand-lg navbar-light bg-light py-1 mt-0">
+          <div class="container-fluid">
+            <a class="navbar-brand text-light" href="#"><img src="assets/img/logo.png" id="logo-img" alt=""> Clinica Rolling</a>
+            <button class="navbar-toggler border-dark" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                  <a class="nav-link text-light" aria-current="page" href="#">Iniciar Sesión</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link text-light" href="#">Registrarse</a>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </nav>
     </section>
     <!-- FIN NAVBAR -->
     <!-- COMIENZO CUERPO -->
-    <section class="border-bottom py-5">
+    <section class="py-5">
       <img src="/assets/img/Doctor_Isometric.svg" class="my-5" alt="">
     </section>
     <!-- FIN CUERPO -->
     <!-- COMIENZO FOOTER -->
-    <section>
+    <section class="footer">
       <div class="container-fluid">
-        <div class="row">
-          <div class="col text-center">hola</div>
-          <div class="col text-center">hola</div>
-          <div class="col text-center">hola</div>
+        <div class="row align-items-center">
+          <div class="col text-center">© 2021 Clinica Rolling</div>
+          <div class="col text-center">
+            <p class="my-2">CLINICA ROLLING</p>
+            <p class="my-2"><a href="https://www.google.com/maps/place/Hilton+Garden+Inn+Tucuman,+Miguel+Lillo+365,+T4000+San+Miguel+de+Tucum%C3%A1n,+Tucum%C3%A1n/@-26.8328032,-65.2224328,17z/data=!4m2!3m1!1s0x94225c6ef372d485:0x5364a96acedda853" target="_blank">Miguel Lillo 365, S.M. de Tucumán, Argentina</a></p>
+            <p class="my-2"><a href="error404.html"><img src="/assets/img/logos_wsp.png" alt=""> (381) 345-9546</a></p>
+          </div>
+          <div class="col text-center d-flex flex-column align-items-center">
+            <a href="#"><img src="/assets/img/logos_fb.png" alt=""></a>
+            <a href="#"><img src="/assets/img/logos_ig.png" class="my-2" alt=""></a>
+            <a href="#"><img src="assets/img/logos_tw.png" alt=""></a>
+          </div>
         </div>
       </div>
     </section>

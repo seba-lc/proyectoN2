@@ -1,4 +1,4 @@
-.body-index img{
+.body-img img{
     width: 100vw;
 }
 
@@ -24,8 +24,8 @@
     border-bottom-right-radius: 20px;
     width: 90vw;
     padding-top: 0.5rem;
-
 }
+
 .box-white:hover{
     background-color: rgba(0,0,0,0.2);
 }
@@ -40,9 +40,23 @@
     text-decoration: none;
     color: rgb(33,37,41);
 }
-.footer:hover{
+/* .footer:hover{
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
     -webkit-box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.68); 
     box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.68);
+} */
+@media screen and (max-width: 767px){
+    .footer{
+        margin-top: 100px !important;
+    }
+}
+@media screen and (min-width: 992px){
+    .body-img img{
+        width: 992px;
+    }
+    .body-img{
+        display: flex;
+        justify-content: center;
+    }
 }

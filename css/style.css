@@ -1,0 +1,22 @@
+img{
+    width: 100vw;
+}
+
+.navbar-brand img{
+    width: 50px;
+}
+
+body{
+    background: #00A4FF;
+}
+
+.navbar{
+    background-color: transparent !important;
+}
+.navbar:hover{
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    -webkit-box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.68); 
+    box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.68);
+    transform: scale(1.01);
+}

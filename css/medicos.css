@@ -13,9 +13,9 @@
     display: grid;
     grid-template-columns: repeat(7, 1fr);
 }
-.first-day{
+/* .first-day{
     grid-column-start: 3;
-}
+} */
 .day-name{
     font-weight: bold;
     text-align: center;
@@ -40,4 +40,8 @@
 }
 .fas:hover{
     transform: scale(1.25);
+}
+
+.not-in-view{
+    display: none;
 }

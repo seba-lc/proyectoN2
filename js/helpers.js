@@ -3,7 +3,7 @@ export function navbarInsert() {
   let navbarCont = document.createElement("div");
   navbarCont.innerHTML=`
     <nav class="navbar navbar-expand-lg navbar-light bg-light py-1 mt-0">
-          <div class="container-fluid">
+          <div class="container">
             <a class="navbar-brand text-light" href="#"><img src="assets/img/logo.png" id="logo-img" alt=""> Clinica Rolling</a>
             <button class="navbar-toggler border-dark" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
@@ -21,7 +21,43 @@ export function navbarInsert() {
           </div>
         </nav>
     `;
-  navbarCont.classList.add('box-white', 'pb-1', 'my-0', 'mx-5', 'py-0');
+  navbarCont.classList.add('box-white', 'pb-1', 'my-0', 'py-0');
+  navbarSection.appendChild(navbarCont);
+}
+
+export function navbarInsert2() {
+  let navbarSection = document.getElementById("navbar-sec");
+  let navbarCont = document.createElement("div");
+  navbarCont.innerHTML=`
+  <nav class="navbar navbar-expand-lg navbar-light bg-light py-1 mt-0">
+  <div class="container">
+    <a class="navbar-brand text-light" href="#"><img src="assets/img/logo.png" id="logo-img" alt=""> Clinica Rolling</a>
+    <button class="navbar-toggler border-dark" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link text-light" aria-current="page" href="#">Inicio</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-light" href="#">Mis turnos</a>
+        </li>
+        <li class="nav-item">
+          <form class="d-flex">
+            <input class="form-control me-2 search-form" type="search" placeholder="Buscador de médicos" aria-label="Search">
+            <button class="btn btn-outline-light" type="submit">Buscar</button>
+          </form>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-light" href="#">Cerrar sesión</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+  `;
+  navbarCont.classList.add('box-white', 'pb-1', 'my-0', 'py-0');
   navbarSection.appendChild(navbarCont);
 }
 

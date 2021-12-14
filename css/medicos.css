@@ -1,0 +1,43 @@
+.medico-img{
+    background-image: url(../assets/img/caribe.jpeg);
+    background-position: center;
+    background-size: cover;
+    width: 60%;
+    border-radius: 30px;
+}
+#doctor-page{
+    padding-top: 5rem !important;
+}
+.calendar{
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+}
+.first-day{
+    grid-column-start: 3;
+}
+.day-name{
+    font-weight: bold;
+    text-align: center;
+    padding: 0.5rem;
+}
+.dias-mes{
+    text-align: center;
+    padding: 0.5rem;
+}
+.dias-mes:hover{
+    background-color: rgb(160, 160, 160);
+    transition: 200ms;
+}
+#next-button{
+    cursor: pointer;
+}
+#before-button{
+    cursor: pointer;
+}
+.fas:hover{
+    transform: scale(1.25);
+}
+.fas:hover{
+    transform: scale(1.25);
+}

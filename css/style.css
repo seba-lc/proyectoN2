@@ -1,44 +1,45 @@
-.body-img img{
-    width: 100vw;
+.body-img img {
+  width: 100vw;
 }
 
-.navbar-brand img{
-    width: 50px;
+.navbar-brand img {
+  width: 50px;
 }
 
-.body-index{
-    background: #00A4FF;
+.body-index {
+  background: #00a4ff;
 }
 
-.navbar{
-    background-color: transparent !important;
+.navbar {
+  background-color: transparent !important;
+  z-index: 10;
 }
-.navbar:hover{
-    border-bottom-left-radius: 20px;
-    border-bottom-right-radius: 20px;
-    -webkit-box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.68); 
-    box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.68);
+.navbar:hover {
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  -webkit-box-shadow: 5px 5px 15px 5px rgba(0, 0, 0, 0.68);
+  box-shadow: 5px 5px 15px 5px rgba(0, 0, 0, 0.68);
 }
-.box-white{
-    border-bottom-left-radius: 20px;
-    border-bottom-right-radius: 20px;
-    width: 90vw;
-    padding-top: 0.5rem;
+.box-white {
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  width: 100vw;
+  padding-top: 0.5rem;
 }
 
-.box-white:hover{
-    background-color: rgba(0,0,0,0.2);
+.box-white:hover {
+  background-color: rgba(0, 0, 0, 0.6);
 }
-.footer img{
-    width: 27px;
+.footer img {
+  width: 27px;
 }
-.footer{
-    font-family: 'Roboto', sans-serif;
-    font-size: 15px;
+.footer {
+  font-family: "Roboto", sans-serif;
+  font-size: 15px;
 }
-.footer a{
-    text-decoration: none;
-    color: rgb(33,37,41);
+.footer a {
+  text-decoration: none;
+  color: rgb(33, 37, 41);
 }
 /* .footer:hover{
     border-top-left-radius: 20px;
@@ -46,17 +47,32 @@
     -webkit-box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.68); 
     box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.68);
 } */
-@media screen and (max-width: 767px){
-    .footer{
-        margin-top: 100px !important;
-    }
+
+.search-form{
+  width: 50% !important;
 }
-@media screen and (min-width: 992px){
-    .body-img img{
-        width: 992px;
-    }
-    .body-img{
-        display: flex;
-        justify-content: center;
-    }
+
+@media screen and (min-width: 576px){
+  .box-white{
+      margin-left: 3rem;
+      margin-right: 3rem;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .footer {
+    margin-top: 100px !important;
+  }
+}
+@media screen and (min-width: 992px) {
+  .body-img img {
+    width: 992px;
+  }
+  .body-img {
+    display: flex;
+    justify-content: center;
+  }
+  .search-form{
+    width: 100% !important;
+}
 }

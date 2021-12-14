@@ -1,0 +1,17 @@
+body{
+    background-color: #00A4FF;
+}
+.card{
+    position: static;
+    -webkit-box-shadow: 5px 5px 15px 0px rgba(0,0,0,0.62); 
+    box-shadow: 5px 5px 15px 0px rgba(0,0,0,0.62);
+}
+.card:hover{
+    transform: scale(1.03);
+    transition: 300ms;
+    /* z-index: -5; */
+}
+.medicos-page{
+    text-decoration: none;
+    color: rgb(33,37,41);
+}

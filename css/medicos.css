@@ -45,3 +45,21 @@
 .not-in-view{
     display: none;
 }
+
+.row{
+    width: 90vw !important;
+    hw
+}
+.input-turno{
+    width: 70vw !important;
+}
+.input-turno:focus{
+    border-color: rgb(206,212,218) !important;
+    box-shadow: none;
+}
+.agendar{
+    cursor: pointer;
+}
+.agendar:hover{
+    transform: scale(1.1);
+}

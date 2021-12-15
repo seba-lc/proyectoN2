@@ -74,6 +74,8 @@ class Month{
     }
     calendarDays.classList.add('dias-mes');
     calendarDays.setAttribute('id',`${i}-${this.mes}-${this.año}`);
+    calendarDays.style.cursor = 'pointer';
+    calendarDays.addEventListener('click', verTurnos);
     let calendarList = document.getElementById(`calendar-list-${this.mes}-${this.año}`);
     calendarList.appendChild(calendarDays);
   }
@@ -165,3 +167,131 @@ function beforeMonth(event){
 }
 
 
+//COMIENZO DE TURNOS
+
+let turnos = [];
+
+class Turno{
+  constructor(dia, mes, año, hora, motivo){
+    this.dia = dia;
+    this.mes = mes;
+    this.año = año;
+    this.hora = hora;
+    this.motivo = motivo;
+  }
+}
+
+let horasTurnos = [8,9,10,11,12,15,16,17,18];
+
+function removerTurnos(){
+  for(let i=0; i<horasTurnos.length; i++){
+    let turnosRemove = document.querySelector(`#m${horasTurnos[i]}`)
+    let ubi = turnosRemove.target.parentElement.parentElement.parentElement;
+    let turnosContainer = document.getElementById('turn-container');
+    turnosContainer.removeChild(ubi);
+  }
+}
+
+let userTurn;
+let turnContainer2;
+function verTurnos(event){
+  // let turnosId = event.target.id;
+  // if(turnContainer2!=undefined){
+    removerTurnos();
+    for(let i=0; i<horasTurnos.length; i++){
+      userTurn = document.createElement('div');
+      userTurn.innerHTML = `
+      <div class="row  py-0 my-2 d-flex align-items-center">
+        <div class="col-1 mt-1"><h6 class="card-title">${horasTurnos[i]}.00hs</h6></div>
+        <div class="col-10 card-text">
+          <form class="d-flex align-items-center">
+            <div class="mb-3">
+              <input type="text" placeholder="Escriba el motivo de su consulta" class="form-control ms-1 border-top-0 border-start-0 border-end-0 input-turno" id="m${horasTurnos[i]}">
+            </div>
+            <div class="agendar ms-4 border rounded bg-success px-2 py-1"><i class="far fa-check text-light"></i></div>
+            <div class="agendar ms-2 border rounded bg-danger px-2 py-1"><i class="far fa-trash-alt text-light"></i></div>
+          </form>
+        </div>
+      </div>
+      `;
+      userTurn.classList.add('container');
+      turnContainer = document.getElementById('turn-container');
+      turnContainer.appendChild(userTurn);
+    }
+  // }}else{
+
+  
+  // for(let i=0; i<horasTurnos.length; i++){
+  //   userTurn = document.createElement('div');
+  //   userTurn.innerHTML = `
+  //   <div class="row  py-0 my-2 d-flex align-items-center">
+  //     <div class="col-1 mt-1"><h6 class="card-title">${horasTurnos[i]}.00hs</h6></div>
+  //     <div class="col-10 card-text">
+  //       <form class="d-flex align-items-center">
+  //         <div class="mb-3">
+  //           <input type="text" placeholder="Escriba el motivo de su consulta" class="form-control ms-1 border-top-0 border-start-0 border-end-0 input-turno" id="m${horasTurnos[i]}">
+  //         </div>
+  //         <div class="agendar ms-4 border rounded bg-success px-2 py-1"><i class="far fa-check text-light"></i></div>
+  //         <div class="agendar ms-2 border rounded bg-danger px-2 py-1"><i class="far fa-trash-alt text-light"></i></div>
+  //       </form>
+  //     </div>
+  //   </div>
+  //   `;
+  //   userTurn.classList.add('row', 'py-0', 'my-2', 'd-flex', 'align-items-center');
+  //   turnContainer2 = document.getElementById('turn-container2');
+  //   turnContainer2.appendChild(userTurn);
+  // }
+  }
+
+  console.log(document.getElementById('turn-container'));
+  // console.log(turnContainer);
+
+
+
+  // if(userTurn === undefined){
+  // horasTurnos.forEach(turno => {
+  //   let userTurn = document.createElement('div');
+  //   userTurn.innerHTML = `
+  //   <div class="row  py-0 my-2 d-flex align-items-center">
+  //     <div class="col-1 mt-1"><h6 class="card-title">${turno}.00hs</h6></div>
+  //     <div class="col-10 card-text">
+  //       <form class="d-flex align-items-center">
+  //         <div class="mb-3">
+  //           <input type="text" placeholder="Escriba el motivo de su consulta" class="form-control ms-1 border-top-0 border-start-0 border-end-0 input-turno" id="exampleInputEmail1">
+  //         </div>
+  //         <div class="agendar ms-4 border rounded bg-success px-2 py-1"><i class="far fa-check text-light"></i></div>
+  //         <div class="agendar ms-2 border rounded bg-danger px-2 py-1"><i class="far fa-trash-alt text-light"></i></div>
+  //       </form>
+  //     </div>
+  //   </div>
+  //   `;
+  //   userTurn.classList.add('container');
+  //   let turnContainer = document.getElementById('turn-container');
+  //   turnContainer.appendChild(userTurn);
+  //   console.log(turnContainer);
+  // })
+  // }
+  // else{
+  //   turnContainer.remove();
+  //   horasTurnos.forEach(turno => {
+  //     userTurn = document.createElement('div');
+  //     userTurn.innerHTML = `
+  //     <div class="row  py-0 my-2 d-flex align-items-center">
+  //       <div class="col-1 mt-1"><h6 class="card-title">${turno}.00hs</h6></div>
+  //       <div class="col-10 card-text">
+  //         <form class="d-flex align-items-center">
+  //           <div class="mb-3">
+  //             <input type="text" placeholder="Escriba el motivo de su consulta" class="form-control ms-1 border-top-0 border-start-0 border-end-0 input-turno" id="exampleInputEmail1">
+  //           </div>
+  //           <div class="agendar ms-4 border rounded bg-success px-2 py-1"><i class="far fa-check text-light"></i></div>
+  //           <div class="agendar ms-2 border rounded bg-danger px-2 py-1"><i class="far fa-trash-alt text-light"></i></div>
+  //         </form>
+  //       </div>
+  //     </div>
+  //     `;
+  //     userTurn.classList.add('container');
+  //     turnContainer = document.getElementById('turn-container');
+  //     turnContainer.appendChild(userTurn);
+  //   })
+  // }
+}

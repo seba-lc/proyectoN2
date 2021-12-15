@@ -19,6 +19,7 @@
   border-bottom-right-radius: 20px;
   -webkit-box-shadow: 5px 5px 15px 5px rgba(0, 0, 0, 0.68);
   box-shadow: 5px 5px 15px 5px rgba(0, 0, 0, 0.68);
+  transition: 300ms;
 }
 .box-white {
   border-bottom-left-radius: 20px;
@@ -29,6 +30,7 @@
 
 .box-white:hover {
   background-color: rgba(0, 0, 0, 0.6);
+  transition: 300ms;
 }
 .footer img {
   width: 27px;

@@ -2,29 +2,9 @@ import { navbarInsert2, footerInsert } from "./helpers.js";
 navbarInsert2();
 footerInsert();
 
-// console.log('1-   '+Date());
-// console.log('2-   '+new Date().getDay());
-// console.log('3-   '+new Date().getDate());
-// console.log('4-   '+new Date().getMonth());
-// console.log('5-   '+new Date().getFullYear());
-// console.log('6-   '+new Date().getHours());
-// console.log('7-   '+new Date().getMinutes());
-// console.log('8-   '+new Date().getSeconds());
-// console.log('9-   '+new Date().toDateString());
-// console.log('10-   '+new Date().toLocaleDateString());
-// console.log('11-   '+new Date().toLocaleString());
-// console.log('12-   '+new Date().toLocaleTimeString());// Da la hora del meridiano 0
-// console.log('13-   '+new Date().getUTCDate());
-// console.log('14-   '+Date.now()); //Cuantos segundos pasaron desde el 1enero de 1870
-
-//momentojs.com librería para manejar el tiempo en nuestras páginas
-
-// console.log(new Date(2021,11,1).getDay());
-// console.log(new Date(2021,12,0).getDate());// el 0 es el último día del mes pasado!!!
+//COMIENZO CALENDARIO
 
 let meses = [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
-let años = [2021, 2022];
-let dias = [ "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo"];
 
 function daysOfMonth(mes, año) {
   return new Date(año, mes + 1, 0).getDate();
@@ -83,6 +63,7 @@ class Month{
 
 }
 
+//DIA DE HOY
 function today(){
   let todayYear = new Date().getFullYear();
   let todayMonth = new Date().getMonth();
@@ -90,17 +71,18 @@ function today(){
   let todayBgColor = document.getElementById(`${todayDay}-${todayMonth}-${todayYear}`);
   todayBgColor.classList.add('bg-success', 'rounded-circle');
 }
+//FIN DIA DE HOY
 
-
-
+//PRIMER MES correpondiente al día de hoy
 let todayYear = new Date().getFullYear();
 let todayMonth = new Date().getMonth();
 
 let firstMonth = new Month(todayYear, todayMonth, daysOfMonth(todayMonth, todayYear), firstDayMonth(todayMonth, todayYear));
 mesesRestantes.push(firstMonth);
+//FIN DEL PRIMER MES
 
-
-for (let i = 0; i<12; i++){ //Para generar 12 meses a partir del mes que estoy parado
+//GENERACIÓN DE LOS PROXIMOS 12 MESES, para mas de 12 meses le debería cambiar el valor a i
+for (let i = 0; i<12; i++){
   todayMonth++;
   if(todayMonth === 12){
     todayMonth = 0;
@@ -108,15 +90,18 @@ for (let i = 0; i<12; i++){ //Para generar 12 meses a partir del mes que estoy p
   }
   mesesRestantes.push(new Month(todayYear, todayMonth, daysOfMonth(todayMonth, todayYear), firstDayMonth(todayMonth, todayYear)))
 }
+//FIN DE GENERACION DE LOS 12 MESES (PARA EL ARRAY)
 
+//CREACIÓN DE LOS MESES EN LA PANTALLA
 for (let i = 0; i<13; i++){
   mesesRestantes[i].createCalendarMonth();
 }
 
-today();
+today(); //Señal del día de hoy
 
-console.log(mesesRestantes);
+// console.log(mesesRestantes);
 
+//PERMITIR QUE SE VEA UNICAMENTE EL MES DE HOY-COMIENZO
 for (let i = 0; i<13; i++){
   if(i===0){
     let todayMonth = document.getElementById(`${mesesRestantes[0].mes}-${mesesRestantes[0].año}`);
@@ -126,7 +111,9 @@ for (let i = 0; i<13; i++){
     todayMonth.classList.add('not-in-view');
   }
 }
+//FIN
 
+//GENERACION DEL BOTON Y DINAMISMO PARA PASAR DE MES A MES
 for(let i=0; i<13; i++){
   let nextBtn = document.getElementById(`next-button-${mesesRestantes[i].mes}-${mesesRestantes[i].año}`)
   nextBtn.addEventListener('click', nextMonth);
@@ -155,7 +142,6 @@ for(let i=0; i<13; i++){
 function beforeMonth(event){
   if(k>0){
     let btnId = event.target.parentElement.parentElement.parentElement.id;
-    // console.log(btnId);
     let elementId = document.getElementById(`${btnId}`);
     elementId.classList.replace('in-view', 'not-in-view');
     j--;
@@ -165,14 +151,15 @@ function beforeMonth(event){
     beforeElementId.classList.replace('not-in-view', 'in-view');
   }
 }
+//FIN DE GENERACION DEL BOTON Y DINAMISMO PARA PASAR DE MES A MES
+
 
 
 //COMIENZO DE TURNOS
-
 let turnos = [];
 
 class Turno{
-  constructor(dia, mes, año, hora, motivo){
+  constructor(dia, mes, año, hora, motivo){ //FALTA AGREGAR EL USER
     this.dia = dia;
     this.mes = mes;
     this.año = año;
@@ -181,117 +168,129 @@ class Turno{
   }
 }
 
-let horasTurnos = [8,9,10,11,12,15,16,17,18];
+let horasTurnos = ['08','09','10','11','12','15','16','17','18'];
 
-function removerTurnos(){
-  for(let i=0; i<horasTurnos.length; i++){
-    let turnosRemove = document.querySelector(`#m${horasTurnos[i]}`)
-    let ubi = turnosRemove.target.parentElement.parentElement.parentElement;
-    let turnosContainer = document.getElementById('turn-container');
-    turnosContainer.removeChild(ubi);
-  }
-}
 
+
+//COMIENZO GENERACION DE AGENDA
+//se Hizo con la idea de que se genere la agenda y se busque la información
+//cada vez que se reproduce la función, a diferencia del calendario que tiene los
+//meses ocultos
 let userTurn;
-let turnContainer2;
-function verTurnos(event){
-  // let turnosId = event.target.id;
-  // if(turnContainer2!=undefined){
-    removerTurnos();
-    for(let i=0; i<horasTurnos.length; i++){
-      userTurn = document.createElement('div');
-      userTurn.innerHTML = `
-      <div class="row  py-0 my-2 d-flex align-items-center">
-        <div class="col-1 mt-1"><h6 class="card-title">${horasTurnos[i]}.00hs</h6></div>
-        <div class="col-10 card-text">
-          <form class="d-flex align-items-center">
-            <div class="mb-3">
-              <input type="text" placeholder="Escriba el motivo de su consulta" class="form-control ms-1 border-top-0 border-start-0 border-end-0 input-turno" id="m${horasTurnos[i]}">
-            </div>
-            <div class="agendar ms-4 border rounded bg-success px-2 py-1"><i class="far fa-check text-light"></i></div>
-            <div class="agendar ms-2 border rounded bg-danger px-2 py-1"><i class="far fa-trash-alt text-light"></i></div>
-          </form>
+function verTurnos(event){ //se reproduce cuando toco un día del calendario
+  //info previa
+  let day = event.target.innerText;
+  let monthYear = event.target.parentElement.id.substring(14);
+  let month;
+  if(monthYear.length===7){
+    month = monthYear.substring(0,2);
+  }else{
+    month = monthYear.substring(0,1)
+  }
+  let year = monthYear.substring(monthYear.length-4);
+  //fin info previa
+
+  //comienzo de borrado y creacion del contenedor que va a recibir la agenda 
+  let turnContainer2R = document.getElementById('turn-container2');
+  let turnContainerR = document.getElementById('turn-container');
+  if(turnContainer2R !== undefined){
+    turnContainerR.removeChild(turnContainer2R);
+    let turnContainerRep = document.createElement('div');
+    turnContainerRep.innerHTML = `
+    <div id="y-${year}">
+      <div id="m-${month}">
+        <div id="d-${day}">
+          <h5 class="card-title text-center mb-5">Día ${day} del mes de ${meses[month]} del año ${year}.</h6>
         </div>
       </div>
-      `;
-      userTurn.classList.add('container');
-      turnContainer = document.getElementById('turn-container');
-      turnContainer.appendChild(userTurn);
-    }
-  // }}else{
-
-  
-  // for(let i=0; i<horasTurnos.length; i++){
-  //   userTurn = document.createElement('div');
-  //   userTurn.innerHTML = `
-  //   <div class="row  py-0 my-2 d-flex align-items-center">
-  //     <div class="col-1 mt-1"><h6 class="card-title">${horasTurnos[i]}.00hs</h6></div>
-  //     <div class="col-10 card-text">
-  //       <form class="d-flex align-items-center">
-  //         <div class="mb-3">
-  //           <input type="text" placeholder="Escriba el motivo de su consulta" class="form-control ms-1 border-top-0 border-start-0 border-end-0 input-turno" id="m${horasTurnos[i]}">
-  //         </div>
-  //         <div class="agendar ms-4 border rounded bg-success px-2 py-1"><i class="far fa-check text-light"></i></div>
-  //         <div class="agendar ms-2 border rounded bg-danger px-2 py-1"><i class="far fa-trash-alt text-light"></i></div>
-  //       </form>
-  //     </div>
-  //   </div>
-  //   `;
-  //   userTurn.classList.add('row', 'py-0', 'my-2', 'd-flex', 'align-items-center');
-  //   turnContainer2 = document.getElementById('turn-container2');
-  //   turnContainer2.appendChild(userTurn);
-  // }
+    </div>
+    `;
+    turnContainerRep.setAttribute('id', 'turn-container2')
+    turnContainerR.appendChild(turnContainerRep);
+  }else{
+    let turnContainerRep = document.createElement('div');
+    turnContainerRep.innerHTML = `
+    <div id="y-${year}">
+      <div id="m-${month}">
+        <div id="d-${day}">
+          <h5 class="card-title text-center mb-5">Día ${day} del mes de ${meses[month]} del año ${year}.</h6>
+        </div>
+      </div>
+    </div>
+    `;
+    turnContainerRep.setAttribute('id', 'turn-container2')
+    turnContainerR.appendChild(turnContainerRep);
   }
+  //fin de borrado y creacion del contenedor que va a recibir la agenda 
 
-  console.log(document.getElementById('turn-container'));
-  // console.log(turnContainer);
+  //Comienzo de creacion de los turnos del día y la fecha especificada, con el input
+  for(let i=0; i<horasTurnos.length; i++){
+    userTurn = document.createElement('div');
+    userTurn.innerHTML = `
+    <div class="col-1 mt-1"><h6 class="card-title">${horasTurnos[i]}.00hs</h6></div>
+    <div class="col-10 card-text">
+      <form class="d-flex align-items-center">
+        <div class="mb-3">
+          <input type="text" placeholder="Escriba el motivo de su consulta" class="form-control ms-1 border-top-0 border-start-0 border-end-0 input-turno" id="m${horasTurnos[i]}">
+        </div>
+        <div id="b${horasTurnos[i]}" class="agendar ms-4 border rounded bg-light px-2 py-1 position-relative">&#10004</div>
+        <div class="agendar ms-2 border rounded bg-danger px-2 py-1 not-in-view"><i class="far fa-trash-alt text-light"></i></div>
+      </form>
+    </div>
+    `;
+    userTurn.classList.add('row', 'py-0', 'my-2', 'd-flex', 'align-items-center')
+    let turnContainerDay = document.getElementById(`d-${day}`);
+    turnContainerDay.appendChild(userTurn);
+    document.getElementById(`b${horasTurnos[i]}`).addEventListener('click', agendarTurno)
+  }
+  //fin de los turnos del dia y fecha especificada
 
-
-
-  // if(userTurn === undefined){
-  // horasTurnos.forEach(turno => {
-  //   let userTurn = document.createElement('div');
-  //   userTurn.innerHTML = `
-  //   <div class="row  py-0 my-2 d-flex align-items-center">
-  //     <div class="col-1 mt-1"><h6 class="card-title">${turno}.00hs</h6></div>
-  //     <div class="col-10 card-text">
-  //       <form class="d-flex align-items-center">
-  //         <div class="mb-3">
-  //           <input type="text" placeholder="Escriba el motivo de su consulta" class="form-control ms-1 border-top-0 border-start-0 border-end-0 input-turno" id="exampleInputEmail1">
-  //         </div>
-  //         <div class="agendar ms-4 border rounded bg-success px-2 py-1"><i class="far fa-check text-light"></i></div>
-  //         <div class="agendar ms-2 border rounded bg-danger px-2 py-1"><i class="far fa-trash-alt text-light"></i></div>
-  //       </form>
-  //     </div>
-  //   </div>
-  //   `;
-  //   userTurn.classList.add('container');
-  //   let turnContainer = document.getElementById('turn-container');
-  //   turnContainer.appendChild(userTurn);
-  //   console.log(turnContainer);
-  // })
-  // }
-  // else{
-  //   turnContainer.remove();
-  //   horasTurnos.forEach(turno => {
-  //     userTurn = document.createElement('div');
-  //     userTurn.innerHTML = `
-  //     <div class="row  py-0 my-2 d-flex align-items-center">
-  //       <div class="col-1 mt-1"><h6 class="card-title">${turno}.00hs</h6></div>
-  //       <div class="col-10 card-text">
-  //         <form class="d-flex align-items-center">
-  //           <div class="mb-3">
-  //             <input type="text" placeholder="Escriba el motivo de su consulta" class="form-control ms-1 border-top-0 border-start-0 border-end-0 input-turno" id="exampleInputEmail1">
-  //           </div>
-  //           <div class="agendar ms-4 border rounded bg-success px-2 py-1"><i class="far fa-check text-light"></i></div>
-  //           <div class="agendar ms-2 border rounded bg-danger px-2 py-1"><i class="far fa-trash-alt text-light"></i></div>
-  //         </form>
-  //       </div>
-  //     </div>
-  //     `;
-  //     userTurn.classList.add('container');
-  //     turnContainer = document.getElementById('turn-container');
-  //     turnContainer.appendChild(userTurn);
-  //   })
-  // }
+  //comienzo turnos del día agotados (guardados en el local storage)
+  if(localStorage.getItem('turnos') !== null){
+    turnos = JSON.parse(localStorage.getItem('turnos'));
+    
+    let turnosFiltrados = turnos.filter(turno => turno.año == year && turno.mes == month && turno.dia == day);
+    for(let i=0; i<turnosFiltrados.length; i++){
+      let inputId = document.getElementById(`m${turnosFiltrados[i].hora}`);
+      inputId.setAttribute('value', 'TURNO OCUPADO');
+      inputId.classList.add('text-center')
+      inputId.setAttribute('disabled','')
+      let btnId = document.getElementById(`b${turnosFiltrados[i].hora}`);
+      btnId.classList.add('not-in-view');
+      /*Me falta después de que cree los usuarios, que en los turnos aparezca quien lo sacó.
+      Si el usuario que está en la página lo sacó, que en vez de decir turno agotado, 
+      diga el motivo del turno, motivo: bla bla, y que tenga la opción de eliminarlo
+      si es el user.*/
+    }
+  }
+  //fin turnos del día agotados
 }
+//FIN GENERACION DE AGENDA
+
+
+//COMIENZO AGENDANDO TURNOS Y MANDANDOLOS AL LOCAL STORAGE
+function agendarTurno(event){
+  if(localStorage.getItem('turnos') !== null){
+    turnos = JSON.parse(localStorage.getItem('turnos'));
+  }
+  let horaId = event.target.id.substring(1); //hora
+  let diaId = event.target.parentElement.parentElement.parentElement.parentElement.id.substring(2); //dia
+  let mesId = event.target.parentElement.parentElement.parentElement.parentElement.parentElement.id.substring(2); //mes
+  let añoId = event.target.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.id.substring(2); //año
+  let motivoContainer = document.getElementById(`m${horaId}`).value;
+
+  let newAppoint = new Turno(diaId, mesId, añoId, horaId, motivoContainer);
+  turnos.push(newAppoint);
+  let turnosJson = JSON.stringify(turnos);
+  localStorage.setItem('turnos', turnosJson);
+  let inputId = document.getElementById(`m${horaId}`);
+  inputId.setAttribute('value', 'TURNO OCUPADO');
+  inputId.classList.add('text-center')
+  inputId.setAttribute('disabled','')
+  let btnId = document.getElementById(`b${horaId}`);
+  btnId.classList.add('not-in-view');
+}
+// FIN AGENDANDO TURNOS Y MANDANDOLOS AL LOCAL STORAGE
+
+//HASTA ACÁ ESTÁ TODO REVISADO Y EXPLICADO-- TENGO QUE VOLVER PARA ATRÁS
+//AHORA Y CREAR LA PAGINA Y AGENDA DE CADA MEDICO

@@ -2,6 +2,29 @@ import { navbarInsert2, footerInsert } from "./helpers.js";
 navbarInsert2();
 footerInsert();
 
+//COMIENZO MEDICO
+
+let medicos = JSON.parse(localStorage.getItem('medicos'));
+
+let idMedico = window.location.hash.slice(1);
+let medicoDesc = medicos.find(medico => medico.id == idMedico)
+
+let medicoInfo = document.createElement('div');
+medicoInfo.innerHTML = `
+<div class="medico-img d-flex justify-content-center pt-5">
+  <img src="/assets/img/${medicoDesc.foto}" alt="foto-medico">
+</div>
+<h4 class="card-title mt-2">${medicoDesc.nombre} - Especialidad: ${medicoDesc.especialidad}</h5>
+<p class="card-text mx-5 text-center my-3">"Lorem, ipsum dolor sit amet consectetur adipisicing elit. Excepturi illum nemo, modi quis libero repudiandae! A hic itaque veniam dolor neque, excepturi qui quaerat, alias possimus laboriosam sequi, iure explicabo!"</p>
+<h5 class="card-title mt-2">DISPONIBILIDAD DE TURNOS</h5>
+`;
+medicoInfo.classList.add('d-flex', 'flex-column', 'align-items-center');
+let infoContainer = document.getElementById('medico-id');
+infoContainer.appendChild(medicoInfo);
+
+
+//FIN MEDICO
+
 //COMIENZO CALENDARIO
 
 let meses = [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
@@ -99,7 +122,6 @@ for (let i = 0; i<13; i++){
 
 today(); //Señal del día de hoy
 
-// console.log(mesesRestantes);
 
 //PERMITIR QUE SE VEA UNICAMENTE EL MES DE HOY-COMIENZO
 for (let i = 0; i<13; i++){
@@ -165,6 +187,7 @@ class Turno{
     this.año = año;
     this.hora = hora;
     this.motivo = motivo;
+    this.medicoId = idMedico;
   }
 }
 
@@ -249,7 +272,7 @@ function verTurnos(event){ //se reproduce cuando toco un día del calendario
   if(localStorage.getItem('turnos') !== null){
     turnos = JSON.parse(localStorage.getItem('turnos'));
     
-    let turnosFiltrados = turnos.filter(turno => turno.año == year && turno.mes == month && turno.dia == day);
+    let turnosFiltrados = turnos.filter(turno => turno.año == year && turno.mes == month && turno.dia == day && turno.medicoId == idMedico);
     for(let i=0; i<turnosFiltrados.length; i++){
       let inputId = document.getElementById(`m${turnosFiltrados[i].hora}`);
       inputId.setAttribute('value', 'TURNO OCUPADO');

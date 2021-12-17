@@ -16,10 +16,46 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;1,100&display=swap" rel="stylesheet">
   </head>
-  <body class="body-index">
+  <body class="body-index" id="full-body-container">
     <section class="position-fixed w-100 d-flex justify-content-center" id="navbar-sec"></section>
+<!--COMIENZO Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Formulario de registro</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="register-form">
+          <div class="mb-3">
+            <label for="register-name" class="form-label">Nombre</label>
+            <input type="text" class="form-control" id="register-name">
+          </div>
+          <div class="mb-3">
+            <label for="register-lastname" class="form-label">Apellido</label>
+            <input type="text" class="form-control" id="register-lastname">
+          </div>
+          <div class="mb-3">
+            <label for="register-email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="register-email" aria-describedby="emailHelp">
+          </div>
+          <div class="mb-3">
+            <label for="register-password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="register-password">
+          </div>
+          <div class="modal-footer">
+            <button id="clear-btn" class="btn btn-secondary">Borrar datos</button>
+            <button type="submit" class="btn btn-primary">Registrarse</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- FIN Modal -->
     <!-- COMIENZO CUERPO -->
-    <section class="py-5 body-img">
+    <section class="py-5 body-img" id="body-container">
       <img src="/assets/img/Doctor_Isometric.svg" class="my-5" alt="">
     </section>
     <!-- FIN CUERPO -->

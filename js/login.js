@@ -2,12 +2,13 @@ import { navbarInsert2, footerInsert } from "./helpers.js";
 navbarInsert2();
 footerInsert();
 
-// if ('scrollRestoration' in history) {
-//   history.scrollRestoration = 'manual';
-// }
-
+//La pagina no me en el (0,0)
+if ('scrollRestoration' in history) {
+  history.scrollRestoration = 'manual';
+}
 () => {window.scrollTo(0,0)};
 
+//PARA QUE SOLO SE PUEDA VER LA PÁGINA SI SE INGRESÓ COMO UN USUARIO
 if(window.location.hash == ''|| localStorage.getItem('userLogged') == null){
   console.log('entre');
   let navbar = document.getElementById('navbar-sec');
@@ -15,17 +16,14 @@ if(window.location.hash == ''|| localStorage.getItem('userLogged') == null){
   navbar.classList.add('not-in-view');
   body.classList.add('not-in-view');
   setTimeout(()=>window.location.assign(window.location.origin + '/index.html'),2000);
-}else{
+}else{ //EL RESTO DEL CODIGO
 
-// let users = JSON.parse(localStorage.getItem('users'));
 let userLogged = JSON.parse(localStorage.getItem('userLogged'));
-
 let userWelcome = document.getElementById('user-welcome');
-// let idUserNumber = window.location.hash.slice(1);
 userWelcome.innerText = `Bienvenido ${userLogged.name} :)`;
-// let userLoggedJSON = JSON.stringify(userLogged);
-// localStorage.setItem('userLogged', userLoggedJSON);
 
+
+//MOLDE PARA LA CREACION DE LAS CARDS
 class Especialidad {
   constructor(titulo, imagen, medicos, id) {
     this.titulo = titulo;
@@ -35,6 +33,8 @@ class Especialidad {
   }
 }
 
+
+//MOLDE PARA LA BASE DE DATOS DE LOS MÉDICOS
 class Medico {
   constructor(nombre, foto, especialidad, id){
     this.nombre = nombre;
@@ -63,6 +63,10 @@ let medicos = [
   new Medico('Dr. Rolling 16', 'avatar-medico.png', 'Traumatología', 43),
 ]
 
+let medicosJSON = JSON.stringify(medicos);
+localStorage.setItem('medicos', medicosJSON);
+
+//DIFERENCIACIÓN DE MEDICOS SEGÚN ESPECIALIDAD
 let odontologia = medicos.filter(medico => medico.especialidad == 'Odontología');
 let medicosOdontologia = [];
 for(let i = 0; i<odontologia.length; i++){
@@ -84,6 +88,7 @@ for(let i = 0; i<traumatologia.length; i++){
   medicosTraumatologia.push(traumatologia[i].nombre);
 }
 
+//DATOS DE LAS CARDS DE LAS DISTINTAS ESPECIALIDADES
 let especialidades = [
   new Especialidad("Odontología", "odontologia.png", medicosOdontologia, 1),
   new Especialidad("Cirugía", "cirugia.jpg", medicosCirugia, 2),
@@ -91,11 +96,7 @@ let especialidades = [
   new Especialidad("Traumatología", "traumatologia.png", medicosTraumatologia, 4),
 ];
 
-console.log(especialidades);
-
-let medicosJSON = JSON.stringify(medicos);
-localStorage.setItem('medicos', medicosJSON);
-
+//CREACION DE LAS DIFERENTES CARDS
 especialidades.forEach(especialidad => {
   let especialidadCard = document.createElement('div');
   especialidadCard.innerHTML = `
@@ -116,6 +117,7 @@ especialidades.forEach(especialidad => {
   medicosList(especialidad)
 });
 
+//LISTA DE MEDICOS CON REDIRECCIONAMIENTO HACIA SU PAGINA Y AGENDA DE TURNOS
 function medicosList(especialidad){
   for(let i=0; i<especialidad.medicos.length; i++){
     let divMedicos = document.createElement('div');
@@ -139,4 +141,4 @@ function redirection(event){
 
 
 
-}
+}// FIN DEL ELSE DEL PRINCIPIO DE LA PAGINA

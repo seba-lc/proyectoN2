@@ -1,3 +1,5 @@
+
+//NAVBAR QUE UTILIZO EN EL LANDING
 export function navbarInsert() {
   let navbarSection = document.getElementById("navbar-sec");
   let navbarCont = document.createElement("div");
@@ -27,6 +29,16 @@ export function navbarInsert() {
   sesionInit.style.cursor = 'pointer';
   sesionInit.addEventListener('click',initSession)
 
+  //UTILIZO LA VENTANA MODAL DE BOOTSTRAP PARA EL REGISTRO EN LA PAGINA
+  //BORRADO DE DATOS DEL FORMULARIO
+  let clearId = document.getElementById('clear-btn');
+  clearId.addEventListener('click', clearForm);
+  function clearForm(event){
+    event.preventDefault();
+    document.getElementById('register-form').reset();
+  }
+
+  //VENTANA MODAL PARA INICIAR SESION
   let k = 0;
   function initSession() {
     k = 1;
@@ -63,12 +75,15 @@ export function navbarInsert() {
     document.addEventListener('keydown', closeInit);
   }
 
+  //EVENT LISTENER ALTERNATIVO (CON ENTER)
   function alternativa(event){
     if(event.keyCode === 13){
       event.preventDefault();
       inside();
     }
   }
+
+  // CERRAR LA VENTANA MODAL DE INICIO DE SESION CON ESCAPE
   function closeInit(event){
     if(k===1){
       if(event.keyCode === 27){
@@ -84,6 +99,8 @@ export function navbarInsert() {
     }
   }
   
+  // FUNCION PARA INICIAR SESION Y REEDIRIGIRSE A LA PAGINA PRINCIPAL
+  // TAMBIEN PARA GUARDAR LOS DATOS DEL USUARIO QUE INGRESA
   let j = 0;
   function inside(){
     j++;
@@ -114,35 +131,25 @@ export function navbarInsert() {
         
       }
     }
-    
   }
-
-
-  let clearId = document.getElementById('clear-btn');
-  clearId.addEventListener('click', clearForm);
-  function clearForm(event){
-    event.preventDefault();
-    document.getElementById('register-form').reset();
-  }
-
 }
 
 
-
+//NAVBAR QUE UTILIZO EN EL RESTO DEL SITIO
 export function navbarInsert2() {
   let navbarSection = document.getElementById("navbar-sec");
   let navbarCont = document.createElement("div");
   navbarCont.innerHTML=`
   <nav class="navbar navbar-expand-lg navbar-light bg-light py-1 mt-0">
   <div class="container">
-    <a class="navbar-brand text-light" href="${window.location.href}"><img src="assets/img/logo.png" id="logo-img" alt=""> Clinica Rolling</a>
+    <a class="navbar-brand text-light" href=""><img src="assets/img/logo.png" id="logo-img" alt=""> Clinica Rolling</a>
     <button class="navbar-toggler border-dark" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link text-light" aria-current="page" href="${window.location.href}">Inicio</a>
+          <a class="nav-link text-light" aria-current="page" href="">Inicio</a>
         </li>
         <li class="nav-item">
           <a class="nav-link text-light" href="error404.html">Mis turnos</a>
@@ -165,6 +172,7 @@ export function navbarInsert2() {
   navbarSection.appendChild(navbarCont);
 }
 
+//FOOTER QUE UTILIZO EN TODO EL SITIO
 export function footerInsert(){
   let footSection = document.getElementById('footer-sec');
   let footCont = document.createElement('div');

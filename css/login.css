@@ -16,3 +16,32 @@ body{
     color: rgb(33,37,41);
     cursor: pointer;
 }
+
+#user-welcome{
+    display: inline-block;
+    margin-top: 5rem !important;
+    font-family: 'Roboto Slab', serif;
+    font-weight: bold;
+    color: #616161;
+    background: #c7c7c7;
+    text-shadow: #e0e0e0 1px 1px 0;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 1rem;
+    -webkit-box-shadow: 5px 5px 15px -1px rgba(0,0,0,0.5); 
+    box-shadow: 5px 5px 15px -1px rgba(0,0,0,0.5);
+    border: 3px outset rgba(28,110,164,0.7);
+    z-index: -1;
+}
+
+.card-body{
+    padding: 0.5rem !important;
+}
+.not-in-view{
+    display: none !important;
+}
+#margen{
+    height: 50px;
+    background-color: transparent;
+}

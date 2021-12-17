@@ -3,20 +3,28 @@ navbarInsert();
 footerInsert();
 
 
-//COMIENZO USUARIOS
+//BORRADO DE DATOS DEL ULTIMO USUARIO INGRESADO
+if(localStorage.getItem('userLogged')!==null){
+  localStorage.removeItem('userLogged')
+}
+
+
+//COMIENZO USUARIOS (base de datos fake)
 class User{
-  constructor(name, lastname, email, password, admin){
+  constructor(name, lastname, email, password, admin, idUser){
     this.name = name;
     this.lastname = lastname;
     this.email = email;
     this.password = password;
     this.admin = admin;
+    this.admin = admin;
+    this.idUser = idUser;
   }
 }
 
 let users = [
-  new User('Sebastian', 'Lopez Cruz', 'admin@gmail.com', 'Admin123', true),
-  new User('Lionel', 'Messi', 'user@gmail.com', 'User123', false)
+  new User('Sebastian', 'Lopez Cruz', 'admin@gmail.com', 'Admin123', true, 1),
+  new User('Lionel', 'Messi', 'user@gmail.com', 'User123', false, 2)
 ]
 
 if(localStorage.getItem('users')===null){
@@ -25,37 +33,19 @@ if(localStorage.getItem('users')===null){
 }
 //FIN USUARIO
 
+//COMIENZO FORMULARIO DE REGISTRO
 let registerFormId = document.getElementById('register-form');
 registerFormId.addEventListener('submit', registerForm);
-
-// let botonRegistro = document.getElementById('boton-registro');
-// botonRegistro.addEventListener('click', createAlt);
-
-// function createAlt(){
-
-//   document.addEventListener('keydown', alternativa2);
-// }
-
-// function alternativa2(event){
-//   if(event.keyCode == 13){
-//     console.log('hola');
-//   }
-// }
-
-
-// Tengo un problema con el enter en el register form, quizás lo pueda resolver 
-//dandole funcionalidad al boton y no al formulario qcyo
+// Me falta solucionar el problema de agregar el enter como event listener
 
 let i = 0;
 function registerForm(event){
   i++;
   event.preventDefault();
-  // document.getElementById('register-form').reset();
   let registerName = document.getElementById('register-name').value;
   let registerLastname = document.getElementById('register-lastname').value;
   let registerEmail = document.getElementById('register-email').value;
   let registerPass = document.getElementById('register-password').value;
-
 
   let nameOk = /^[A-Z]+$/i.test(registerName);
   let lastnameOk = /^[A-Z]+$/i.test(registerLastname);
@@ -70,15 +60,16 @@ function registerForm(event){
   console.log(passOk2);
 
   if(nameOk && passOk1 && passOk2 && lastnameOk && emailOk){
-  let registerUser = new User (registerName, registerLastname, registerEmail, registerPass, false);
-  let data = localStorage.getItem('users');
-  let usersLS = JSON.parse(data);
-  usersLS.push(registerUser);
-  data = JSON.stringify(usersLS);
-  localStorage.setItem('users', data);
+    let data = localStorage.getItem('users');
+    let usersLS = JSON.parse(data);
+    let idUserNumber = usersLS[usersLS.length-1].idUser + 1;
+    let registerUser = new User (registerName, registerLastname, registerEmail, registerPass, false, idUserNumber);
+    usersLS.push(registerUser);
+    data = JSON.stringify(usersLS);
+    localStorage.setItem('users', data);
 
-  document.getElementById('exampleModal').remove();
-  document.querySelector('.modal-backdrop.show').remove();
+    document.getElementById('exampleModal').remove();
+    document.querySelector('.modal-backdrop.show').remove();
   }else if(i===1){
     let errorAlert = document.createElement('div');
     errorAlert.innerHTML = (`
@@ -94,4 +85,5 @@ function registerForm(event){
     },3000);
     }
   }
+  //FIN FORMULARIO DE REGISTRO
   

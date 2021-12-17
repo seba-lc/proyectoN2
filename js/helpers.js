@@ -87,15 +87,16 @@ export function navbarInsert() {
   let j = 0;
   function inside(){
     j++;
-    // console.log(event.keyCode);
-    // console.log(event.target);
-    // event.preventDefault();
     let users = JSON.parse(localStorage.getItem('users'));
     let initEmail = document.getElementById('init-email').value;
     let initPass = document.getElementById('init-pass').value;
     let userLogged = users.find(user => user.email === initEmail);
     if(userLogged && userLogged.password === initPass){
-      window.location.assign(window.location.origin + '/login.html')
+      let idUserNumber = users.find(user => user.email == initEmail).idUser;
+      let userLogged = users.find(user => user.idUser == idUserNumber);
+      let userLoggedJSON = JSON.stringify(userLogged);
+      localStorage.setItem('userLogged', userLoggedJSON);
+      window.location.assign(window.location.origin + `/login.html#${idUserNumber}`)
     }else{
       if(j===1){
         let errorAlert = document.createElement('div');
@@ -134,17 +135,17 @@ export function navbarInsert2() {
   navbarCont.innerHTML=`
   <nav class="navbar navbar-expand-lg navbar-light bg-light py-1 mt-0">
   <div class="container">
-    <a class="navbar-brand text-light" href="#"><img src="assets/img/logo.png" id="logo-img" alt=""> Clinica Rolling</a>
+    <a class="navbar-brand text-light" href="${window.location.href}"><img src="assets/img/logo.png" id="logo-img" alt=""> Clinica Rolling</a>
     <button class="navbar-toggler border-dark" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link text-light" aria-current="page" href="#">Inicio</a>
+          <a class="nav-link text-light" aria-current="page" href="${window.location.href}">Inicio</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-light" href="#">Mis turnos</a>
+          <a class="nav-link text-light" href="error404.html">Mis turnos</a>
         </li>
         <li class="nav-item">
           <form class="d-flex">
@@ -176,9 +177,9 @@ export function footerInsert(){
       <p class="my-2"><a href="error404.html"><img src="/assets/img/logos_wsp.png" alt=""> (381) 345-9546</a></p>
     </div>
     <div class="col-12 col-md-4 text-center d-flex flex-column align-items-center">
-      <a href="#"><img src="/assets/img/logos_fb.png" alt=""></a>
-      <a href="#"><img src="/assets/img/logos_ig.png" class="my-2" alt=""></a>
-      <a href="#"><img src="assets/img/logos_tw.png" alt=""></a>
+      <a href="error404.html"><img src="/assets/img/logos_fb.png" alt=""></a>
+      <a href="error404.html"><img src="/assets/img/logos_ig.png" class="my-2" alt=""></a>
+      <a href="error404.html"><img src="assets/img/logos_tw.png" alt=""></a>
     </div>
   </div>
   `;

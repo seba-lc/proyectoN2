@@ -2,6 +2,8 @@ import { navbarInsert2, footerInsert } from "./helpers.js";
 navbarInsert2();
 footerInsert();
 
+let userLogged = JSON.parse(localStorage.getItem('userLogged'));
+
 //COMIENZO MEDICO
 
 let medicos = JSON.parse(localStorage.getItem('medicos'));
@@ -181,13 +183,15 @@ function beforeMonth(event){
 let turnos = [];
 
 class Turno{
-  constructor(dia, mes, año, hora, motivo){ //FALTA AGREGAR EL USER
+  constructor(dia, mes, año, hora, motivo, userId){ //FALTA AGREGAR EL USER
     this.dia = dia;
     this.mes = mes;
     this.año = año;
     this.hora = hora;
     this.motivo = motivo;
     this.medicoId = idMedico;
+    this.userId = userId;
+    this.id = turnos.length;
   }
 }
 
@@ -257,14 +261,15 @@ function verTurnos(event){ //se reproduce cuando toco un día del calendario
           <input type="text" placeholder="Escriba el motivo de su consulta" class="form-control ms-1 border-top-0 border-start-0 border-end-0 input-turno" id="m${horasTurnos[i]}">
         </div>
         <div id="b${horasTurnos[i]}" class="agendar ms-4 border rounded bg-light px-2 py-1 position-relative">&#10004</div>
-        <div class="agendar ms-2 border rounded bg-danger px-2 py-1 not-in-view"><i class="far fa-trash-alt text-light"></i></div>
+        <div id="t${horasTurnos[i]}" class="agendar ms-2 border rounded bg-danger px-2 py-1 not-in-view mb-3 text-light">X</div>
       </form>
     </div>
     `;
     userTurn.classList.add('row', 'py-0', 'my-2', 'd-flex', 'align-items-center')
     let turnContainerDay = document.getElementById(`d-${day}`);
     turnContainerDay.appendChild(userTurn);
-    document.getElementById(`b${horasTurnos[i]}`).addEventListener('click', agendarTurno)
+    document.getElementById(`b${horasTurnos[i]}`).addEventListener('click', agendarTurno);
+    document.getElementById(`t${horasTurnos[i]}`).addEventListener('click', borrarTurno);
   }
   //fin de los turnos del dia y fecha especificada
 
@@ -276,10 +281,14 @@ function verTurnos(event){ //se reproduce cuando toco un día del calendario
     for(let i=0; i<turnosFiltrados.length; i++){
       let inputId = document.getElementById(`m${turnosFiltrados[i].hora}`);
       inputId.setAttribute('value', 'TURNO OCUPADO');
-      inputId.classList.add('text-center')
-      inputId.setAttribute('disabled','')
+      inputId.classList.add('text-center');
+      inputId.setAttribute('disabled','');
       let btnId = document.getElementById(`b${turnosFiltrados[i].hora}`);
+      let btnTrashId = document.getElementById(`t${turnosFiltrados[i].hora}`);
       btnId.classList.add('not-in-view');
+      if(turnosFiltrados[i].userId === userLogged.idUser){
+        btnTrashId.classList.replace('not-in-view', 'in-view');
+      }
       /*Me falta después de que cree los usuarios, que en los turnos aparezca quien lo sacó.
       Si el usuario que está en la página lo sacó, que en vez de decir turno agotado, 
       diga el motivo del turno, motivo: bla bla, y que tenga la opción de eliminarlo
@@ -302,7 +311,7 @@ function agendarTurno(event){
   let añoId = event.target.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.id.substring(2); //año
   let motivoContainer = document.getElementById(`m${horaId}`).value;
 
-  let newAppoint = new Turno(diaId, mesId, añoId, horaId, motivoContainer);
+  let newAppoint = new Turno(diaId, mesId, añoId, horaId, motivoContainer, userLogged.idUser);
   turnos.push(newAppoint);
   let turnosJson = JSON.stringify(turnos);
   localStorage.setItem('turnos', turnosJson);
@@ -312,8 +321,37 @@ function agendarTurno(event){
   inputId.setAttribute('disabled','')
   let btnId = document.getElementById(`b${horaId}`);
   btnId.classList.add('not-in-view');
+  let btnTrashId = document.getElementById(`t${horaId}`);
+  btnTrashId.classList.replace('not-in-view', 'in-view');
 }
 // FIN AGENDANDO TURNOS Y MANDANDOLOS AL LOCAL STORAGE
+
+//BORRADO DE TURNOS
+function borrarTurno(event){
+  let answer = window.confirm('¿Seguro desea borrar el turno?');
+  if(answer){
+    let numberId = event.target.id.substring(1);
+    let inputId = `m${numberId}`;
+    let input = document.getElementById(inputId);
+    input.removeAttribute('value');
+    input.removeAttribute('disabled');
+    input.classList.remove('text-center')
+    let trashBtn = document.getElementById(`t${numberId}`);
+    let confirmBtn = document.getElementById(`b${numberId}`);
+    confirmBtn.classList.replace('not-in-view', 'in-view');
+    trashBtn.classList.replace('in-view', 'not-in-view');
+    let turnos = JSON.parse(localStorage.getItem('turnos'));
+    let horaTurno = event.target.id.substring(1);
+    let diaTurno = event.target.parentElement.parentElement.parentElement.parentElement.id.substring(2);
+    let mesTurno = event.target.parentElement.parentElement.parentElement.parentElement.parentElement.id.substring(2);
+    let añoTurno = event.target.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.id.substring(2);
+    let idMedico = window.location.hash.substring(1);
+    let turnoBorrado = turnos.find(turno => turno.hora == horaTurno && turno.dia == diaTurno && turno.mes == mesTurno && turno.año == añoTurno && turno.medicoId == idMedico);
+    turnos.splice(turnos.indexOf(turnoBorrado),1);
+    let turnosJSON = JSON.stringify(turnos);
+    localStorage.setItem('turnos', turnosJSON)
+  }
+}
 
 //HASTA ACÁ ESTÁ TODO REVISADO Y EXPLICADO-- TENGO QUE VOLVER PARA ATRÁS
 //AHORA Y CREAR LA PAGINA Y AGENDA DE CADA MEDICO

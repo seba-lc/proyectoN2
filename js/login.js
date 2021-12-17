@@ -2,6 +2,30 @@ import { navbarInsert2, footerInsert } from "./helpers.js";
 navbarInsert2();
 footerInsert();
 
+// if ('scrollRestoration' in history) {
+//   history.scrollRestoration = 'manual';
+// }
+
+() => {window.scrollTo(0,0)};
+
+if(window.location.hash == ''|| localStorage.getItem('userLogged') == null){
+  console.log('entre');
+  let navbar = document.getElementById('navbar-sec');
+  let body = document.getElementById('speciality-container');
+  navbar.classList.add('not-in-view');
+  body.classList.add('not-in-view');
+  setTimeout(()=>window.location.assign(window.location.origin + '/index.html'),2000);
+}else{
+
+// let users = JSON.parse(localStorage.getItem('users'));
+let userLogged = JSON.parse(localStorage.getItem('userLogged'));
+
+let userWelcome = document.getElementById('user-welcome');
+// let idUserNumber = window.location.hash.slice(1);
+userWelcome.innerText = `Bienvenido ${userLogged.name} :)`;
+// let userLoggedJSON = JSON.stringify(userLogged);
+// localStorage.setItem('userLogged', userLoggedJSON);
+
 class Especialidad {
   constructor(titulo, imagen, medicos, id) {
     this.titulo = titulo;
@@ -96,7 +120,7 @@ function medicosList(especialidad){
   for(let i=0; i<especialidad.medicos.length; i++){
     let divMedicos = document.createElement('div');
     divMedicos.innerHTML =`
-    <div class="medicos-page border d-inline-block" id="${especialidad.titulo.substring(0,3)}-${i}">- ${especialidad.medicos[i]}</div>
+    <div class="medicos-page my-1 d-inline-block" id="${especialidad.titulo.substring(0,3)}-${i}">- ${especialidad.medicos[i]}</div>
     `;
     divMedicos.addEventListener('click', redirection)
     let medicosList = document.getElementById(`lista-medicos-${especialidad.id}`);
@@ -110,4 +134,9 @@ function redirection(event){
   let pressId = id1+id2;
   console.log(pressId);
   window.location.assign(window.location.origin + `/medicos.html#${pressId}`);
+}
+
+
+
+
 }

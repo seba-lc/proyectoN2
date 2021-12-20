@@ -142,26 +142,28 @@ export function navbarInsert2() {
   navbarCont.innerHTML=`
   <nav class="navbar navbar-expand-lg navbar-light bg-light py-1 mt-0">
   <div class="container">
-    <a class="navbar-brand text-light"><img src="assets/img/logo.png" id="logo-img" alt=""> Clinica Rolling</a>
+    <a class="navbar-brand text-light" href="${window.location.href}"><img src="assets/img/logo.png" id="logo-img" alt=""> Clinica Rolling</a>
     <button class="navbar-toggler border-dark" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link text-light" aria-current="page" href="">Inicio</a>
+          <a class="nav-link text-light" aria-current="page" href="${window.location.href}">Inicio</a>
         </li>
         <li class="nav-item">
           <a class="nav-link text-light" href="error404.html">Mis turnos</a>
         </li>
         <li class="nav-item">
-          <form class="d-flex">
-            <input class="form-control me-2 search-form" type="search" placeholder="Buscador de médicos" aria-label="Search">
+          <form class="d-flex" id="searching-form" autocomplete="off">
+            <div class="position-relative" id="search-div">
+              <input id="search-input" class="form-control me-2 search-form" type="search" placeholder="Buscador de médicos" aria-label="Search">
+            </div>
             <button class="btn btn-outline-light" type="submit">Buscar</button>
           </form>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-light" href="#">Cerrar sesión</a>
+          <a class="nav-link text-light" href="http://127.0.0.1:5500/index.html">Cerrar sesión</a>
         </li>
       </ul>
     </div>

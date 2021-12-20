@@ -6,11 +6,6 @@ body{
     -webkit-box-shadow: 5px 5px 15px 0px rgba(0,0,0,0.62); 
     box-shadow: 5px 5px 15px 0px rgba(0,0,0,0.62);
 }
-/* .card:hover{
-    transform: scale(1.03);
-    transition: 300ms;
-    /* z-index: -5; */
-/* } */
 
 .medicos-page{
     text-decoration: none;
@@ -46,4 +41,20 @@ body{
 .box-white {
     background-color: rgba(0, 0, 0, 0.6);
     transition: 300ms;
+}
+
+.search-helper1{
+    width: 300px;
+    background-color: #FFFFFF;
+    padding: 0.375rem 0.75rem;
+}
+.search-helper2{
+    width: 300px;
+    background-color: #FFFFFF;
+    padding: 0.375rem 0.75rem;
+}
+.search-helper2:hover{
+    background-color: rgb(143, 143, 143);
+    transition: 500ms;
+    cursor: pointer;
 }

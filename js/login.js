@@ -15,7 +15,7 @@ if(window.location.hash == ''|| localStorage.getItem('userLogged') == null){
   let body = document.getElementById('speciality-container');
   navbar.classList.add('not-in-view');
   body.classList.add('not-in-view');
-  setTimeout(()=>window.location.assign(window.location.origin + '/index.html'),2000);
+  // setTimeout(()=>window.location.assign(window.location.origin + '/index.html'),2000);
 }else{ //EL RESTO DEL CODIGO
 
 let userLogged = JSON.parse(localStorage.getItem('userLogged'));
@@ -63,8 +63,10 @@ let medicos = [
   new Medico('Dr. Rolling 16', 'avatar-medico.png', 'Traumatología', 43),
 ]
 
+
 let medicosJSON = JSON.stringify(medicos);
 localStorage.setItem('medicos', medicosJSON);
+
 
 //DIFERENCIACIÓN DE MEDICOS SEGÚN ESPECIALIDAD
 let odontologia = medicos.filter(medico => medico.especialidad == 'Odontología');
@@ -87,6 +89,7 @@ let medicosTraumatologia = [];
 for(let i = 0; i<traumatologia.length; i++){
   medicosTraumatologia.push(traumatologia[i].nombre);
 }
+
 
 //DATOS DE LAS CARDS DE LAS DISTINTAS ESPECIALIDADES
 let especialidades = [
@@ -139,6 +142,128 @@ function redirection(event){
 }
 
 
+//BUSCADOR DE MEDICOS
 
 
+let k = 0;
+let searchInput = document.getElementById('search-input');
+let searchForm = document.getElementById('searching-form');
+let searchDiv = document.getElementById('search-div')
+searchForm.addEventListener('submit', search);
+let especificidad = 0;
+// let bottomBox;
+
+//FUNCION DEL BOTON SEARCH (O DE APRETAR ENTER EN EL FORMULARIO POR DEFECTO)
+function search(event){
+  k++;
+  event.preventDefault();
+  let searchInputValue = searchInput.value.toUpperCase();
+  let specialFilter = medicos.filter(medico => medico.especialidad.toUpperCase().includes(searchInputValue));
+  let especialidad;
+
+  //BUSCO ESPECIFICIDAD EN LA BUSQUEDA PARA QUE SE MUESTREN LOS MEDICOS
+  //DE SOLO UNA ESPECIALIDAD
+  if(specialFilter.length == 0){
+    especificidad = 1;
+  }else{
+
+    for(let i=0; i<specialFilter.length; i++){
+      if(i===specialFilter.length-1){
+        especialidad = specialFilter[0].especialidad;
+      }else{
+        if(specialFilter[i+1].especialidad !== specialFilter[i].especialidad){
+          especificidad = 1;
+        }else{
+          especialidad = specialFilter[0].especialidad;
+        }
+      }
+    }
+  }
+  let specialContainer = document.createElement('div');
+  if(especificidad === 1){
+    specialContainer.innerText = 'Sea más específico';
+    specialContainer.classList.add('position-absolute', 'search-helper1', 'text-decoration-underline');
+    searchDiv.appendChild(specialContainer);
+  }else{
+  specialContainer.innerText = `${especialidad}`;
+  specialContainer.classList.add('position-absolute', 'search-helper1', 'text-decoration-underline');
+  searchDiv.appendChild(specialContainer);
+  let j = 0;
+  specialFilter.forEach(medico => {
+    j++;
+    let medicoContainer = document.createElement('div');
+    medicoContainer.innerText = `${medico.nombre}`;
+    medicoContainer.classList.add('position-absolute', 'search-helper2');
+    medicoContainer.style.top = `${73+(j-1)*35}px`
+    //redireccion a la página de cada médico
+    medicoContainer.addEventListener('click', redirection2)
+    searchDiv.appendChild(medicoContainer);
+
+    function redirection2(){
+      let pressId = medico.id;
+      console.log(pressId);
+      window.location.assign(window.location.origin + `/medicos.html#${pressId}`)
+    }
+  });
+}
+
+// Para que cuando se trabaje en el buscador se activen estás opciones de 
+//cerrado de las opciones
+  if(k===1){
+    document.addEventListener('keydown', closeSearch);
+    document.addEventListener('click', clickClose)
+  }
+  }
+  
+  function closeSearch(event){
+    if(event.keyCode === 27){
+      let specialContainer = document.querySelector('.search-helper1');
+      let medicoContainer = document.querySelectorAll('.search-helper2');
+      searchDiv.removeChild(specialContainer);
+      for(let l=0; l<medicoContainer.length; l++){
+        searchDiv.removeChild(medicoContainer[l])
+      }
+      document.removeEventListener('keydown', closeSearch);
+      document.removeEventListener('click', clickClose);
+      k--;
+    }
+  }
+
+  //click fuera de la ventanta
+  function clickClose(event){
+    let medicoContainer = document.querySelectorAll('.search-helper2');
+    let specialityContainer = document.querySelector('.search-helper1')
+    let limitX1 = searchDiv.getBoundingClientRect().left;
+    let limitX2 = searchDiv.getBoundingClientRect().right;
+    let limitY1 = searchDiv.getBoundingClientRect().top;
+    let lastBox
+    if(especificidad===0){
+      lastBox = medicoContainer[medicoContainer.length-1];
+    }else{
+      lastBox = specialityContainer;
+      especificidad--;
+    }
+    let limitY2 = lastBox.getBoundingClientRect().bottom;
+    if(event.x < limitX1 || event.x > limitX2 || event.y < limitY1 || event.y > limitY2){
+      let specialContainer = document.querySelector('.search-helper1');
+      let medicoContainer = document.querySelectorAll('.search-helper2');
+      searchDiv.removeChild(specialContainer);
+      for(let l=0; l<medicoContainer.length; l++){
+        searchDiv.removeChild(medicoContainer[l])
+      }
+      k--;
+      document.removeEventListener('click', clickClose);
+      document.removeEventListener('keydown', closeSearch);
+    }
+    // console.log(searchDiv.getBoundingClientRect().top);
+    // console.log(searchDiv.getBoundingClientRect().right);
+    // console.log(lastBox.getBoundingClientRect().bottom);
+    // console.log(searchDiv.getBoundingClientRect().left);
+    // console.log(event.x);
+    // console.log(event.y);
+  }
+  
+  //FIN BUSCADOR DE MEDICO POR ESPECIALIDAD
+  
+  
 }// FIN DEL ELSE DEL PRINCIPIO DE LA PAGINA

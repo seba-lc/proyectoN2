@@ -2,6 +2,10 @@
   width: 100vw;
 }
 
+#navbar-sec{
+  z-index: 10;
+}
+
 .navbar-brand img {
   width: 50px;
 }
@@ -12,7 +16,7 @@
 
 .navbar {
   background-color: transparent !important;
-  z-index: 10;
+  z-index: 20 !important;
 }
 .navbar:hover {
   border-bottom-left-radius: 20px;
@@ -73,6 +77,60 @@
   z-index: 1;
 }
 
+
+#dialog-box{
+  width: 250px;
+  border: solid black 1px;
+  position: absolute;
+  border-radius: 3rem;
+  left: 50px;
+  top: 8%;
+  font-family: 'Ubuntu Mono', monospace;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+@media screen and (max-width: 640px) {
+  #dialog-box-2{
+    height: 150px;
+    /* position: relative !important; */
+    margin-left: 50% !important;
+    transform: translateX(-50%) !important;
+  } 
+}
+
+.transparent-char{
+  color: transparent;
+}
+
+#mouth{
+  border: solid black 1px;
+  position: absolute;
+  border-radius: 50%;
+  top: 188px;
+  transform: rotate(90deg);
+  font-size: 6px;
+  visibility: hidden;
+}
+
+#play-btn{
+  width: 100%;
+  text-align: center;
+  text-decoration: underline;
+  cursor: pointer;
+  z-index: 20;
+}
+
+#play-btn:hover{
+  background-color: #ffdfda;
+  border: solid black; 
+  /* background: -moz-radial-gradient(center, #CECECE 0%, #AAAAAA 50%, #C5C5C5 100%);
+  background: -webkit-radial-gradient(center, #CECECE 0%, #AAAAAA 50%, #C5C5C5 100%);
+  background: radial-gradient(ellipse at center, #CECECE 0%, #AAAAAA 50%, #C5C5C5 100%); */
+  transition: background-color 300ms linear;
+  transition: border 300ms linear;
+}
+
 .footer img {
   width: 27px;
 }
@@ -114,6 +172,9 @@
 @media screen and (min-width: 992px) {
   .body-img img {
     width: 992px;
+  }
+  #mouth{
+    visibility: visible;
   }
   .body-img {
     display: flex;

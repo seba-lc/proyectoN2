@@ -87,3 +87,53 @@ function registerForm(event){
   }
   //FIN FORMULARIO DE REGISTRO
   
+
+//COMIENZO BOT
+
+let letterTime = 50;
+let z = 0;
+let message = `Hello I'm Dr. Rolling. Wel-come to my website. To be  part of this, you have fir-st to register. `;
+let messageLetters = message.split('');
+let talk = document.getElementById('dialog-box');
+if(window.screen.width>640){
+  talk.classList.remove('position-static')
+  talk.style.left = `${(window.screen.width-640)/2.5}px`
+}
+let mouthBox = document.getElementById('mouth');
+mouthBox.style.left = `${452+(window.screen.width-999)/2}px`
+
+let bot = setInterval(botTalk, letterTime);
+
+function botTalk(){
+  z++;
+  let letterDiv = document.createElement('h6');
+  if(messageLetters[z-1] === ' '){
+    letterDiv.innerText = 'a';
+    letterDiv.classList.add('transparent-char');
+    talk.appendChild(letterDiv)
+  }else{
+    letterDiv.innerText = `${messageLetters[z-1]}`;
+    talk.appendChild(letterDiv);
+    mouthBox.innerText = `${messageLetters[z-1]}`
+    // mouthBox.appendChild(letterDiv);
+  }
+}
+
+setTimeout(()=>{clearInterval(bot)}, messageLetters.length*letterTime)
+
+setTimeout(()=>{
+  let playBtn = document.createElement('button');
+  playBtn.innerText = `Register`
+  playBtn.addEventListener('click', playGame);
+  playBtn.setAttribute('id', 'play-btn');
+  playBtn.setAttribute('data-bs-toggle', 'modal');
+  playBtn.setAttribute('data-bs-target', '#exampleModal');
+  playBtn.setAttribute('type', 'button');
+  playBtn.classList.add('mx-5', 'rounded-pill', 'btn-withoutstyle')
+  talk.appendChild(playBtn);
+}, messageLetters.length*letterTime+1000);
+
+function playGame(){
+  console.log('Claro pa');
+}
+

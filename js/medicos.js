@@ -16,7 +16,7 @@ medicoInfo.innerHTML = `
 <div class="medico-img d-flex justify-content-center pt-5">
   <img src="/assets/img/${medicoDesc.foto}" alt="foto-medico">
 </div>
-<h4 class="card-title mt-2">${medicoDesc.nombre} - Especialidad: ${medicoDesc.especialidad}</h5>
+<h4 class="card-title mt-2 text-center">${medicoDesc.nombre} - Especialidad: ${medicoDesc.especialidad}</h5>
 <p class="card-text mx-5 text-center my-3">"Lorem, ipsum dolor sit amet consectetur adipisicing elit. Excepturi illum nemo, modi quis libero repudiandae! A hic itaque veniam dolor neque, excepturi qui quaerat, alias possimus laboriosam sequi, iure explicabo!"</p>
 <h5 class="card-title mt-2">DISPONIBILIDAD DE TURNOS</h5>
 `;
@@ -183,7 +183,7 @@ function beforeMonth(event){
 let turnos = [];
 
 class Turno{
-  constructor(dia, mes, año, hora, motivo, userId){ //FALTA AGREGAR EL USER
+  constructor(dia, mes, año, hora, motivo, userId){
     this.dia = dia;
     this.mes = mes;
     this.año = año;
@@ -254,7 +254,7 @@ function verTurnos(event){ //se reproduce cuando toco un día del calendario
   for(let i=0; i<horasTurnos.length; i++){
     userTurn = document.createElement('div');
     userTurn.innerHTML = `
-    <div class="col-1 mt-1"><h6 class="card-title mx-1">${horasTurnos[i]}.00hs</h6></div>
+    <div class="col-2 col-md-1 mt-1"><h6 class="card-title mx-1">${horasTurnos[i]}.00hs</h6></div>
     <div class="col-10 card-text">
       <form class="d-flex align-items-center">
         <div class="mb-3">
@@ -289,10 +289,6 @@ function verTurnos(event){ //se reproduce cuando toco un día del calendario
       if(turnosFiltrados[i].userId === userLogged.idUser){
         btnTrashId.classList.replace('not-in-view', 'in-view');
       }
-      /*Me falta después de que cree los usuarios, que en los turnos aparezca quien lo sacó.
-      Si el usuario que está en la página lo sacó, que en vez de decir turno agotado, 
-      diga el motivo del turno, motivo: bla bla, y que tenga la opción de eliminarlo
-      si es el user.*/
     }
   }
   //fin turnos del día agotados
@@ -353,5 +349,126 @@ function borrarTurno(event){
   }
 }
 
-//HASTA ACÁ ESTÁ TODO REVISADO Y EXPLICADO-- TENGO QUE VOLVER PARA ATRÁS
-//AHORA Y CREAR LA PAGINA Y AGENDA DE CADA MEDICO
+
+
+
+//BUSCADOR DE MEDICOS
+let m = 0;
+let searchInput = document.getElementById('search-input');
+let searchForm = document.getElementById('searching-form');
+let searchDiv = document.getElementById('search-div')
+searchForm.addEventListener('submit', search);
+let especificidad = 0;
+
+//FUNCION DEL BOTON SEARCH (O DE APRETAR ENTER EN EL FORMULARIO POR DEFECTO)
+function search(event){
+  especificidad = 0;
+  m++;
+  event.preventDefault();
+  let searchInputValue = searchInput.value.toUpperCase();
+  let specialFilter = medicos.filter(medico => medico.especialidad.toUpperCase().includes(searchInputValue));
+  let especialidad;
+
+  //BUSCO ESPECIFICIDAD EN LA BUSQUEDA PARA QUE SE MUESTREN LOS MEDICOS
+  //DE SOLO UNA ESPECIALIDAD
+  if(specialFilter.length == 0){
+    especificidad = 1;
+  }else{
+
+    for(let i=0; i<specialFilter.length; i++){
+      if(i===specialFilter.length-1){
+        especialidad = specialFilter[0].especialidad;
+      }else{
+        if(specialFilter[i+1].especialidad !== specialFilter[i].especialidad){
+          especificidad = 1;
+        }else{
+          especialidad = specialFilter[0].especialidad;
+        }
+      }
+    }
+  }
+  let specialContainer = document.createElement('div');
+  if(especificidad === 1){
+    specialContainer.innerText = 'Sea más específico';
+    specialContainer.classList.add('position-absolute', 'search-helper1', 'text-decoration-underline');
+    searchDiv.appendChild(specialContainer);
+  }else{
+  specialContainer.innerText = `${especialidad}`;
+  specialContainer.classList.add('position-absolute', 'search-helper1', 'text-decoration-underline');
+  searchDiv.appendChild(specialContainer);
+  let j = 0;
+  specialFilter.forEach(medico => {
+    j++;
+    let medicoContainer = document.createElement('div');
+    medicoContainer.innerText = `${medico.nombre}`;
+    medicoContainer.classList.add('position-absolute', 'search-helper2');
+    medicoContainer.style.top = `${73+(j-1)*35}px`
+    //redireccion a la página de cada médico
+    medicoContainer.addEventListener('click', redirection2)
+    searchDiv.appendChild(medicoContainer);
+
+    function redirection2(){
+      let pressId = medico.id;
+      window.location.assign(window.location.origin + `/medicos.html#${pressId}`);
+      window.location.reload();
+    }
+  });
+  }
+
+// Para que cuando se trabaje en el buscador se activen estás opciones de 
+//cerrado
+  if(m===1){
+    document.addEventListener('keydown', closeSearch);
+    document.addEventListener('click', clickClose)
+  }
+  }
+  
+  function closeSearch(event){
+    if(event.keyCode === 27){
+      let specialContainer = document.querySelector('.search-helper1');
+      let medicoContainer = document.querySelectorAll('.search-helper2');
+      searchDiv.removeChild(specialContainer);
+      for(let l=0; l<medicoContainer.length; l++){
+        searchDiv.removeChild(medicoContainer[l])
+      }
+      document.removeEventListener('keydown', closeSearch);
+      document.removeEventListener('click', clickClose);
+      m--;
+    }
+  }
+
+  //click fuera de la ventanta
+  function clickClose(event){
+    let medicoContainer = document.querySelectorAll('.search-helper2');
+    let specialityContainer = document.querySelector('.search-helper1')
+    let limitX1 = searchDiv.getBoundingClientRect().left;
+    let limitX2 = searchDiv.getBoundingClientRect().right;
+    let limitY1 = searchDiv.getBoundingClientRect().top;
+    let lastBox;
+    if(especificidad===0){
+      lastBox = medicoContainer[medicoContainer.length-1];
+    }else{
+      lastBox = specialityContainer;
+    }
+    let limitY2 = lastBox.getBoundingClientRect().bottom;
+    if(event.x < limitX1 || event.x > limitX2 || event.y < limitY1 || event.y > limitY2){
+      let specialContainer = document.querySelector('.search-helper1');
+      let medicoContainer = document.querySelectorAll('.search-helper2');
+      searchDiv.removeChild(specialContainer);
+      for(let l=0; l<medicoContainer.length; l++){
+        searchDiv.removeChild(medicoContainer[l])
+      }
+      m--;
+      document.removeEventListener('click', clickClose);
+      document.removeEventListener('keydown', closeSearch);
+    }
+    // console.log(searchDiv.getBoundingClientRect().top);
+    // console.log(searchDiv.getBoundingClientRect().right);
+    // console.log(lastBox.getBoundingClientRect().bottom);
+    // console.log(searchDiv.getBoundingClientRect().left);
+    // console.log(event.x);
+    // console.log(event.y);
+  }
+  
+  //FIN BUSCADOR DE MEDICO POR ESPECIALIDAD
+

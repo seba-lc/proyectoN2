@@ -2,7 +2,7 @@
     background-image: url(../assets/img/caribe.jpeg);
     background-position: center;
     background-size: cover;
-    width: 60%;
+    width: 90%;
     border-radius: 30px;
 }
 #doctor-page{
@@ -13,9 +13,7 @@
     display: grid;
     grid-template-columns: repeat(7, 1fr);
 }
-/* .first-day{
-    grid-column-start: 3;
-} */
+
 .day-name{
     font-weight: bold;
     text-align: center;
@@ -46,11 +44,6 @@
     display: none;
 }
 
-.row{
-    width: 90vw !important;
-    hw
-}
-
 .input-turno{
     width: 70vw !important;
 }
@@ -69,4 +62,20 @@
 .box-white {
     background-color: rgba(0, 0, 0, 0.6);
     transition: 300ms;
+}
+
+.search-helper1{
+    width: 300px;
+    background-color: #dadada;
+    padding: 0.375rem 0.75rem;
+}
+.search-helper2{
+    width: 300px;
+    background-color: #dadada;
+    padding: 0.375rem 0.75rem;
+}
+.search-helper2:hover{
+    background-color: rgb(143, 143, 143);
+    transition: 500ms;
+    cursor: pointer;
 }

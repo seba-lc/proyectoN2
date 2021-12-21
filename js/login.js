@@ -1,8 +1,10 @@
 import { navbarInsert2, footerInsert } from "./helpers.js";
-navbarInsert2();
-footerInsert();
+if (localStorage.getItem('userLogged')!== null) {
+  navbarInsert2();
+  footerInsert();
+}
 
-//La pagina no me en el (0,0)
+//La pagina no me arranca en el (0,0)
 if ('scrollRestoration' in history) {
   history.scrollRestoration = 'manual';
 }
@@ -10,12 +12,11 @@ if ('scrollRestoration' in history) {
 
 //PARA QUE SOLO SE PUEDA VER LA PÁGINA SI SE INGRESÓ COMO UN USUARIO
 if(window.location.hash == ''|| localStorage.getItem('userLogged') == null){
-  console.log('entre');
   let navbar = document.getElementById('navbar-sec');
   let body = document.getElementById('speciality-container');
   navbar.classList.add('not-in-view');
   body.classList.add('not-in-view');
-  // setTimeout(()=>window.location.assign(window.location.origin + '/index.html'),2000);
+  setTimeout(()=>window.location.assign(window.location.origin + '/index.html'),2500);
 }else{ //EL RESTO DEL CODIGO
 
 let userLogged = JSON.parse(localStorage.getItem('userLogged'));
@@ -142,19 +143,17 @@ function redirection(event){
 }
 
 
-//BUSCADOR DE MEDICOS
-
-
+//BUSCADOR DE MEDICOS POR ESPECIALIDAD CON REDIRECCIONAMIENTO
 let k = 0;
 let searchInput = document.getElementById('search-input');
 let searchForm = document.getElementById('searching-form');
 let searchDiv = document.getElementById('search-div')
 searchForm.addEventListener('submit', search);
 let especificidad = 0;
-// let bottomBox;
 
 //FUNCION DEL BOTON SEARCH (O DE APRETAR ENTER EN EL FORMULARIO POR DEFECTO)
 function search(event){
+  especificidad = 0;
   k++;
   event.preventDefault();
   let searchInputValue = searchInput.value.toUpperCase();
@@ -201,14 +200,13 @@ function search(event){
 
     function redirection2(){
       let pressId = medico.id;
-      console.log(pressId);
       window.location.assign(window.location.origin + `/medicos.html#${pressId}`)
     }
   });
-}
+  }
 
 // Para que cuando se trabaje en el buscador se activen estás opciones de 
-//cerrado de las opciones
+//cerrado
   if(k===1){
     document.addEventListener('keydown', closeSearch);
     document.addEventListener('click', clickClose)
@@ -236,12 +234,11 @@ function search(event){
     let limitX1 = searchDiv.getBoundingClientRect().left;
     let limitX2 = searchDiv.getBoundingClientRect().right;
     let limitY1 = searchDiv.getBoundingClientRect().top;
-    let lastBox
+    let lastBox;
     if(especificidad===0){
       lastBox = medicoContainer[medicoContainer.length-1];
     }else{
       lastBox = specialityContainer;
-      especificidad--;
     }
     let limitY2 = lastBox.getBoundingClientRect().bottom;
     if(event.x < limitX1 || event.x > limitX2 || event.y < limitY1 || event.y > limitY2){

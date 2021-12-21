@@ -36,7 +36,6 @@ if(localStorage.getItem('users')===null){
 //COMIENZO FORMULARIO DE REGISTRO
 let registerFormId = document.getElementById('register-form');
 registerFormId.addEventListener('submit', registerForm);
-// Me falta solucionar el problema de agregar el enter como event listener
 
 let i = 0;
 function registerForm(event){
@@ -95,12 +94,12 @@ let z = 0;
 let message = `Hello I'm Dr. Rolling. Wel-come to my website. To be  part of this, you have fir-st to register. `;
 let messageLetters = message.split('');
 let talk = document.getElementById('dialog-box');
-if(window.screen.width>640){
+if(window.innerWidth>640){
   talk.classList.remove('position-static')
-  talk.style.left = `${(window.screen.width-640)/2.5}px`
+  talk.style.left = `${(window.innerWidth-640)/2.5}px`
 }
 let mouthBox = document.getElementById('mouth');
-mouthBox.style.left = `${452+(window.screen.width-999)/2}px`
+mouthBox.style.left = `${452+(window.innerWidth-999)/2}px`
 
 let bot = setInterval(botTalk, letterTime);
 
@@ -121,19 +120,17 @@ function botTalk(){
 
 setTimeout(()=>{clearInterval(bot)}, messageLetters.length*letterTime)
 
+
+//Boton alternativo de registro
 setTimeout(()=>{
-  let playBtn = document.createElement('button');
-  playBtn.innerText = `Register`
-  playBtn.addEventListener('click', playGame);
-  playBtn.setAttribute('id', 'play-btn');
-  playBtn.setAttribute('data-bs-toggle', 'modal');
-  playBtn.setAttribute('data-bs-target', '#exampleModal');
-  playBtn.setAttribute('type', 'button');
-  playBtn.classList.add('mx-5', 'rounded-pill', 'btn-withoutstyle')
-  talk.appendChild(playBtn);
+  let altRegBtn = document.createElement('button');
+  altRegBtn.innerText = `Register`
+  altRegBtn.setAttribute('id', 'play-btn');
+  altRegBtn.setAttribute('data-bs-toggle', 'modal');
+  altRegBtn.setAttribute('data-bs-target', '#exampleModal');
+  altRegBtn.setAttribute('type', 'button');
+  altRegBtn.classList.add('mx-5', 'rounded-pill', 'btn-withoutstyle')
+  talk.appendChild(altRegBtn);
 }, messageLetters.length*letterTime+1000);
 
-function playGame(){
-  console.log('Claro pa');
-}
 

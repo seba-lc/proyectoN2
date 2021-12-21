@@ -254,7 +254,7 @@ function verTurnos(event){ //se reproduce cuando toco un día del calendario
   for(let i=0; i<horasTurnos.length; i++){
     userTurn = document.createElement('div');
     userTurn.innerHTML = `
-    <div class="col-2 col-md-1 mt-1"><h6 class="card-title mx-1">${horasTurnos[i]}.00hs</h6></div>
+    <div class="col-2 col-md-1 mt-1"><h6 class="card-title ms-2">${horasTurnos[i]}.00hs</h6></div>
     <div class="col-10 card-text">
       <form class="d-flex align-items-center">
         <div class="mb-3">
